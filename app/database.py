@@ -1,7 +1,8 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from models.products import Product
-from models.customers import Customer
-from models.orders import Order
+from app.models.products import Product, ProductCloud
+from app.models.customers import Customer
+from app.models.orders import Order
+from app.models.categories import Category
 
 from beanie import init_beanie
 
@@ -12,7 +13,9 @@ async def connection():
 
     await init_beanie(database=client.ecommerce, document_models=[
         Product,
+        ProductCloud,
         Customer,
-        Order
+        Order,
+        Category,
     ])
 

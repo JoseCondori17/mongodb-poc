@@ -1,17 +1,17 @@
 from beanie import Document
 from pydantic import BaseModel
 
-class Direccion(BaseModel):
-    calle: str
-    ciudad: str
-    pais: str
-    codigo_postal: str
+class Address(BaseModel):
+    street: str
+    city: str
+    country: str
+    postal_code: str
 
 class Customer(Document):
-    nombre: str
+    name: str
     email: str
-    telefono: str
-    direccion: Direccion
+    phone: str
+    address: Address
     
     class Settings:
         name = "customers"

@@ -1,40 +1,50 @@
-from beanie import Document
+from beanie import Document, Link
 from pydantic import BaseModel
 from datetime import date
 
-class ProductItem(BaseModel):
-    product_id: str
-    nombre: str
-    cantidad: int
-    precio_unitario: float
-
 class Dimension(BaseModel):
-    ancho: float
-    alto: float
-    profundidad: float
-    unidad: str
+    width: float
+    height: float
+    depth: float
+    unit: str
     
-class Peso(BaseModel):
-    valor: float
-    unidad: str
+class Weight(BaseModel):
+    value: float
+    unit: str
 
 class Product(Document):
-    nombre: str
-    marca: str
-    precio: int
-    descuento: int
-    categoria: str
-    subcategoria: str
+    name: str
+    brand: str
+    price: float
+    discount: int
+    category: str
+    subcategory: str
     stock: int
-    dimension: Dimension
-    peso: Peso
-    caracteristicas: list[str]
-    calificacion: int
-    descricion: str
-    fecha_lanzamiento: date
+    dimensions: Dimension
+    weight: Weight
+    features: list[str]
+    rating: float
+    description: str
+    release_date: date
     
     class Settings:
         name = "products"
         json_encoders = {
             date: lambda v: v.isoformat() # YYYY-mm-dd
         }
+
+class ProductItem(BaseModel):
+    product_id: Link[Product]
+    name: str
+    quantity: int
+    unit_price: float
+
+
+# other prodcut
+class ProductCloud(Document):
+    model_config = {
+        "extra": "allow"
+    }
+
+    class Settings:
+        name = "products_cloud"
